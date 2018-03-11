@@ -4,18 +4,18 @@ var jsx = {
   children: ['\n    ', {
     nodeName: 'a',
     attributes: {},
-    children: null
+    children: []
   }, '\n    ', {
     nodeName: 'b',
     attributes: {},
-    children: null
+    children: []
   }, ' \n    ', {
     nodeName: 'c',
     attributes: {},
-    children: null
+    children: []
   }, '\n    ', {
     nodeName: 'd',
     attributes: {},
-    children: null
+    children: []
   }, '\n  ']
 };

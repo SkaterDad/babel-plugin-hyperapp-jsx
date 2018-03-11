@@ -8,12 +8,12 @@ var object = {
 var jsxA = {
   nodeName: object.a,
   attributes: {},
-  children: null
+  children: []
 };
 var jsxB = {
   nodeName: object.b.c,
   attributes: {},
-  children: null
+  children: []
 };
 var jsxC = {
   nodeName: object.a,

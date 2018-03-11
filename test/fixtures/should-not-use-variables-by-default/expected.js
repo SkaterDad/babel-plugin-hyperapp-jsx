@@ -3,7 +3,7 @@ var Variable = true;
 var jsxA = {
   nodeName: "Variable",
   attributes: {},
-  children: null
+  children: []
 };
 var jsxB = {
   nodeName: "Variable",

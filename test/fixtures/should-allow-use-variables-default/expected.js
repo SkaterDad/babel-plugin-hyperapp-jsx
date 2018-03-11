@@ -7,7 +7,7 @@ var jsxA = {
   attributes: {
     UppercaseVariable: ""
   },
-  children: null
+  children: []
 };
 var jsxB = {
   nodeName: UppercaseVariable,
@@ -28,7 +28,7 @@ var jsxD = {
   attributes: {
     lowercaseVariable: ""
   },
-  children: null
+  children: []
 };
 var jsxE = {
   nodeName: "lowercaseVariable",

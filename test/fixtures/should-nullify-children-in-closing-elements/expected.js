@@ -6,5 +6,5 @@ var jsxA = {
 var jsxB = {
   nodeName: "div",
   attributes: {},
-  children: null
+  children: []
 };

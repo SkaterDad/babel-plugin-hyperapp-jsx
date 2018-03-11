@@ -7,7 +7,7 @@ var jsxA = {
   attributes: {
     ZVariable: ""
   },
-  children: null
+  children: []
 };
 var jsxB = {
   nodeName: ZVariable,
@@ -28,7 +28,7 @@ var jsxD = {
   attributes: {
     NotZVariable: ""
   },
-  children: null
+  children: []
 };
 var jsxE = {
   nodeName: "NotZVariable",

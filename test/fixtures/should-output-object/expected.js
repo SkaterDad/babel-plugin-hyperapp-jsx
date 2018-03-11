@@ -11,7 +11,7 @@ var jsx = {
       attributes: {
         charSet: "utf8"
       },
-      children: null
+      children: []
     }, {
       nodeName: "title",
       attributes: {},
