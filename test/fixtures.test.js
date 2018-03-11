@@ -11,12 +11,7 @@ const fixturesDirectory = Path.join(__dirname, 'fixtures')
 
 const babelOptions = options => ({
   presets: [
-    [
-      'env',
-      {
-        modules: false,
-      },
-    ],
+    [ 'env', { modules: false } ],
   ],
   plugins: [
     require('babel-plugin-external-helpers'),
@@ -48,8 +43,7 @@ function testDirectory(name) {
   }
 
   it(name, () => {
-    const transformedCode = Babel.transform(actualCode, babelOptions(options))
-      .code
+    const transformedCode = Babel.transform(actualCode, babelOptions(options)).code
     Assert.equalIgnoreSpaces(transformedCode, expectedCode)
   })
 }
