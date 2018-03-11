@@ -184,7 +184,6 @@ module.exports = function({ types: t }) {
     }
 
     const JSXText = node => {
-      if (state.opts.noTrim) return t.stringLiteral(node.value)
       const value = node.value.replace(/\n\s*/g, '')
       return value === '' ? null : t.stringLiteral(value)
     }
