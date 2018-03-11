@@ -7,9 +7,10 @@ const Babel = require('babel-core')
 const fixturesDirectory = Path.join(__dirname, 'fixtures')
 
 const babelOptions = options => ({
+  presets: ['env'],
   plugins: [
     require('babel-plugin-external-helpers'),
-    [require('../src').default, options],
+    [require('../src'), options],
   ],
 })
 
