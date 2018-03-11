@@ -202,7 +202,9 @@ module.exports = function({ types: t }) {
           ),
           t.objectProperty(
             t.identifier(childrenProperty),
-            node.closingElement ? JSXChildren(node.children) : t.nullLiteral()
+            node.closingElement
+              ? JSXChildren(node.children)
+              : t.arrayExpression()
           ),
         ])
       )
