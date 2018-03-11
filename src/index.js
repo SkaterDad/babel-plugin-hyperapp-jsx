@@ -1,13 +1,13 @@
-import isString from 'lodash/isString'
-import identity from 'lodash/identity'
-import ary from 'lodash/ary'
-import esutils from 'esutils'
+const isString = require('lodash/isString')
+const identity = require('lodash/identity')
+const ary = require('lodash/ary')
+const esutils = require('esutils')
 
 const nameProperty = 'elementName'
 const attributesProperty = 'attributes'
 const childrenProperty = 'children'
 
-export default function ({ types: t }) {
+module.exports = function({ types: t }) {
   /* ==========================================================================
    * Utilities
    * ======================================================================= */
@@ -29,7 +29,7 @@ export default function ({ types: t }) {
       useNew = false,
       module: constructorModule,
       function: constructorFunction,
-      useVariables = false
+      useVariables = false,
     } = state.opts
 
     let variablesRegex, jsxObjectTransformer
@@ -43,11 +43,14 @@ export default function ({ types: t }) {
     }
 
     const executeExpression = useNew ? t.newExpression : t.callExpression
-    const jsxObjectTransformerCreator = expression => value => executeExpression(expression, [value])
+    const jsxObjectTransformerCreator = expression => value =>
+      executeExpression(expression, [value])
 
     if (constructorModule) {
       // If the constructor function will be retrieved from a module.
-      const moduleName = path.scope.generateUidIdentifier(useNew ? 'JSXNode' : 'jsx')
+      const moduleName = path.scope.generateUidIdentifier(
+        useNew ? 'JSXNode' : 'jsx'
+      )
       jsxObjectTransformer = jsxObjectTransformerCreator(moduleName)
 
       const importDeclaration = t.importDeclaration(
@@ -56,10 +59,15 @@ export default function ({ types: t }) {
       )
 
       // Add the import declration to the top of the file.
-      path.findParent(p => p.isProgram()).unshiftContainer('body', importDeclaration)
+      path
+        .findParent(p => p.isProgram())
+        .unshiftContainer('body', importDeclaration)
     } else if (constructorFunction) {
       // If the constructor function will be an in scope function.
-      const expression = constructorFunction.split('.').map(ary(t.identifier, 1)).reduce(ary(t.memberExpression, 2))
+      const expression = constructorFunction
+        .split('.')
+        .map(ary(t.identifier, 1))
+        .reduce(ary(t.memberExpression, 2))
       jsxObjectTransformer = jsxObjectTransformerCreator(expression)
     } else {
       // Otherwise, we won‘t be mapping.
@@ -68,7 +76,7 @@ export default function ({ types: t }) {
 
     return {
       variablesRegex,
-      jsxObjectTransformer
+      jsxObjectTransformer,
     }
   }
 
@@ -81,10 +89,7 @@ export default function ({ types: t }) {
       state.set('jsxConfig', initConfig(path, state))
     }
 
-    const {
-      variablesRegex,
-      jsxObjectTransformer
-    } = state.get('jsxConfig')
+    const { variablesRegex, jsxObjectTransformer } = state.get('jsxConfig')
 
     /* ==========================================================================
      * Node Transformers
@@ -92,33 +97,40 @@ export default function ({ types: t }) {
 
     const JSXIdentifier = node => t.stringLiteral(node.name)
 
-    const JSXNamespacedName = node => t.stringLiteral(`${node.namespace.name}:${node.name.name}`)
+    const JSXNamespacedName = node =>
+      t.stringLiteral(`${node.namespace.name}:${node.name.name}`)
 
     const JSXMemberExpression = transformOnType({
       JSXIdentifier: node => t.identifier(node.name),
-      JSXMemberExpression: node => (
+      JSXMemberExpression: node =>
         t.memberExpression(
           JSXMemberExpression(node.object),
           JSXMemberExpression(node.property)
-        )
-      )
+        ),
     })
 
     const JSXElementName = transformOnType({
       JSXIdentifier: variablesRegex
-        ? node => variablesRegex.test(node.name) ? t.identifier(node.name) : JSXIdentifier(node)
+        ? node =>
+            variablesRegex.test(node.name)
+              ? t.identifier(node.name)
+              : JSXIdentifier(node)
         : JSXIdentifier,
       JSXNamespacedName,
-      JSXMemberExpression
+      JSXMemberExpression,
     })
 
     const JSXExpressionContainer = node => node.expression
 
-    const JSXAttributeName = transformOnType({ JSXIdentifier, JSXNamespacedName, JSXMemberExpression })
+    const JSXAttributeName = transformOnType({
+      JSXIdentifier,
+      JSXNamespacedName,
+      JSXMemberExpression,
+    })
 
     const JSXAttributeValue = transformOnType({
       StringLiteral: node => node,
-      JSXExpressionContainer
+      JSXExpressionContainer,
     })
 
     const JSXAttributes = nodes => {
@@ -133,9 +145,15 @@ export default function ({ types: t }) {
             }
 
             const attributeName = JSXAttributeName(node.name)
-            const objectKey = esutils.keyword.isIdentifierNameES6(attributeName.value) ? t.identifier(attributeName.value) : attributeName
+            const objectKey = esutils.keyword.isIdentifierNameES6(
+              attributeName.value
+            )
+              ? t.identifier(attributeName.value)
+              : attributeName
 
-            object.push(t.objectProperty(objectKey, JSXAttributeValue(node.value)))
+            object.push(
+              t.objectProperty(objectKey, JSXAttributeValue(node.value))
+            )
             break
           }
           case 'JSXSpreadAttribute': {
@@ -162,12 +180,7 @@ export default function ({ types: t }) {
         return objects[0]
       }
 
-      return (
-        t.callExpression(
-          state.addHelper('extends'),
-          objects
-        )
-      )
+      return t.callExpression(state.addHelper('extends'), objects)
     }
 
     const JSXText = node => {
@@ -176,35 +189,58 @@ export default function ({ types: t }) {
       return value === '' ? null : t.stringLiteral(value)
     }
 
-    const JSXElement = node => jsxObjectTransformer(
-      t.objectExpression([
-        t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
-        t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.attributes)),
-        t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(node.children) : t.nullLiteral())
-      ])
-    )
+    const JSXElement = node =>
+      jsxObjectTransformer(
+        t.objectExpression([
+          t.objectProperty(
+            t.identifier(nameProperty),
+            JSXElementName(node.openingElement.name)
+          ),
+          t.objectProperty(
+            t.identifier(attributesProperty),
+            JSXAttributes(node.openingElement.attributes)
+          ),
+          t.objectProperty(
+            t.identifier(childrenProperty),
+            node.closingElement ? JSXChildren(node.children) : t.nullLiteral()
+          ),
+        ])
+      )
 
-    const JSXChild = transformOnType({ JSXText, JSXElement, JSXExpressionContainer })
+    const JSXChild = transformOnType({
+      JSXText,
+      JSXElement,
+      JSXExpressionContainer,
+    })
 
-    const JSXChildren = nodes => t.arrayExpression(
-      nodes
-      .map(JSXChild)
-      .filter(Boolean)
-      // Normalize all of our string children into one big string. This can be
-      // an optimization as we minimize the number of nodes created.
-      // This step just turns `['1', '2']` into `['12']`.
-      .reduce((children, child) => {
-        const lastChild = children.length > 0 ? children[children.length - 1] : null
+    const JSXChildren = nodes =>
+      t.arrayExpression(
+        nodes
+          .map(JSXChild)
+          .filter(Boolean)
+          // Normalize all of our string children into one big string. This can be
+          // an optimization as we minimize the number of nodes created.
+          // This step just turns `['1', '2']` into `['12']`.
+          .reduce((children, child) => {
+            const lastChild =
+              children.length > 0 ? children[children.length - 1] : null
 
-        // If this is a string literal, and the last child is a string literal, merge them.
-        if (child.type === 'StringLiteral' && lastChild && lastChild.type === 'StringLiteral') {
-          return [...children.slice(0, -1), t.stringLiteral(lastChild.value + child.value)]
-        }
+            // If this is a string literal, and the last child is a string literal, merge them.
+            if (
+              child.type === 'StringLiteral' &&
+              lastChild &&
+              lastChild.type === 'StringLiteral'
+            ) {
+              return [
+                ...children.slice(0, -1),
+                t.stringLiteral(lastChild.value + child.value),
+              ]
+            }
 
-        // Otherwise just append the child to our array normally.
-        return [...children, child]
-      }, [])
-    )
+            // Otherwise just append the child to our array normally.
+            return [...children, child]
+          }, [])
+      )
 
     // Actually replace JSX with an object.
     path.replaceWith(JSXElement(path.node))
@@ -217,7 +253,7 @@ export default function ({ types: t }) {
   return {
     inherits: require('babel-plugin-syntax-jsx'),
     visitor: {
-      JSXElement: visitJSXElement
-    }
+      JSXElement: visitJSXElement,
+    },
   }
 }
