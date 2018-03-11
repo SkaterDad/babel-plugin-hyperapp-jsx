@@ -3,7 +3,7 @@ const identity = require('lodash/identity')
 const ary = require('lodash/ary')
 const esutils = require('esutils')
 
-const nameProperty = 'elementName'
+const nameProperty = 'nodeName'
 const attributesProperty = 'attributes'
 const childrenProperty = 'children'
 
