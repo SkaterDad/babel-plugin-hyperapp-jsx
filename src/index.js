@@ -29,18 +29,14 @@ module.exports = function({ types: t }) {
       useNew = false,
       module: constructorModule,
       function: constructorFunction,
-      useVariables = false,
+      varsRegex,
     } = state.opts
 
-    let variablesRegex, jsxObjectTransformer
+    let jsxObjectTransformer
 
-    if (useVariables === true) {
-      // Use the default variables regular expression when true.
-      variablesRegex = /^[A-Z]/
-    } else if (isString(useVariables)) {
-      // If it’s a plain regular expression string.
-      variablesRegex = new RegExp(useVariables)
-    }
+    // Users can specify regex for finding Component function names.
+    // Default is Uppercase
+    let variablesRegex = isString(varsRegex) ? new RegExp(varsRegex) : /^[A-Z]/
 
     const executeExpression = useNew ? t.newExpression : t.callExpression
     const jsxObjectTransformerCreator = expression => value =>
