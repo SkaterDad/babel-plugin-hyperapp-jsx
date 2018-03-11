@@ -1,9 +1,14 @@
 {
-  "name": "babel-plugin-transform-jsx",
+  "name": "babel-plugin-hyperapp-jsx",
   "version": "2.0.0",
-  "description": "Turn JSX into static objects.",
-  "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "description": "Turn JSX into Hyperapp VNodes & Function Calls.",
+  "author": "Mike Montoya <dr.mike.montoya@gmail.com>",
   "contributors": [
+    {
+      "name": "Caleb Meredith",
+      "email": "calebmeredith8@gmail.com",
+      "url": "https://github.com/calebmer"
+    },
     {
       "name": "Brandon Payton",
       "email": "brandon@happycode.net",
@@ -11,29 +16,25 @@
     }
   ],
   "license": "MIT",
-  "repository": "https://github.com/calebmer/node_modules/tree/master/babel-plugin-transform-jsx",
+  "repository": "https://github.com/SkaterDad/babel-plugin-hyperapp-jsx",
   "keywords": [
     "jsx",
     "babel-plugin",
     "transform",
-    "open",
-    "standard",
     "plugin",
-    "babel"
+    "babel",
+    "hyperapp"
   ],
   "main": "index.js",
-  "files": [
-    "index.js",
-    "lib"
-  ],
+  "files": ["index.js", "lib"],
   "scripts": {},
   "dependencies": {
-    "babel-plugin-syntax-jsx": "^6.3.13",
+    "babel-plugin-syntax-jsx": "^6.18.0",
     "esutils": "^2.0.2",
-    "lodash": "^4.0.0"
+    "lodash": "^4.17.5"
   },
   "devDependencies": {
-    "babel-core": "^6.4.0",
-    "babel-plugin-external-helpers": "^6.4.0"
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0"
   }
 }
