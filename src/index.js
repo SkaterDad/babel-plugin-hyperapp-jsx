@@ -106,12 +106,10 @@ module.exports = function({ types: t }) {
     })
 
     const JSXElementName = transformOnType({
-      JSXIdentifier: variablesRegex
-        ? node =>
-            variablesRegex.test(node.name)
-              ? t.identifier(node.name)
-              : JSXIdentifier(node)
-        : JSXIdentifier,
+      JSXIdentifier: node =>
+        variablesRegex.test(node.name)
+          ? t.identifier(node.name)
+          : JSXIdentifier(node),
       JSXNamespacedName,
       JSXMemberExpression,
     })
