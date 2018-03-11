@@ -1,4 +1,7 @@
-const Assert = require('assert')
+const chai = require('chai')
+chai.use(require('chai-string'))
+const Assert = chai.assert
+
 const Path = require('path')
 const Fs = require('fs')
 
@@ -7,7 +10,14 @@ const Babel = require('babel-core')
 const fixturesDirectory = Path.join(__dirname, 'fixtures')
 
 const babelOptions = options => ({
-  presets: ['env'],
+  presets: [
+    [
+      'env',
+      {
+        modules: false,
+      },
+    ],
+  ],
   plugins: [
     require('babel-plugin-external-helpers'),
     [require('../src'), options],
@@ -40,6 +50,6 @@ function testDirectory(name) {
   it(name, () => {
     const transformedCode = Babel.transform(actualCode, babelOptions(options))
       .code
-    Assert.equal(transformedCode + '\n', expectedCode)
+    Assert.equalIgnoreSpaces(transformedCode, expectedCode)
   })
 }
