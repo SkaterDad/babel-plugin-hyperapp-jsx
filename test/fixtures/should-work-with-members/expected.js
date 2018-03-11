@@ -6,32 +6,32 @@ var object = {
 };
 
 var jsxA = {
-  elementName: object.a,
+  nodeName: object.a,
   attributes: {},
   children: null
 };
 var jsxB = {
-  elementName: object.b.c,
+  nodeName: object.b.c,
   attributes: {},
   children: null
 };
 var jsxC = {
-  elementName: object.a,
+  nodeName: object.a,
   attributes: {},
   children: []
 };
 var jsxD = {
-  elementName: object.b.c,
+  nodeName: object.b.c,
   attributes: {},
   children: []
 };
 var jsxE = {
-  elementName: object.a,
+  nodeName: object.a,
   attributes: {},
   children: [object.a]
 };
 var jsxF = {
-  elementName: object.b.c,
+  nodeName: object.b.c,
   attributes: {},
   children: [object.b.c]
 };

@@ -1,8 +1,8 @@
 var object = new VNode({
-  elementName: "div",
+  nodeName: "div",
   attributes: {},
   children: [new VNode({
-    elementName: "strong",
+    nodeName: "strong",
     attributes: {},
     children: ["Hello,"]
   }), " world!"]

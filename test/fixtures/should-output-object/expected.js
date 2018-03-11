@@ -1,32 +1,32 @@
 var jsx = {
-  elementName: "html",
+  nodeName: "html",
   attributes: {
     lang: "en"
   },
   children: [{
-    elementName: "head",
+    nodeName: "head",
     attributes: {},
     children: [{
-      elementName: "meta",
+      nodeName: "meta",
       attributes: {
         charSet: "utf8"
       },
       children: null
     }, {
-      elementName: "title",
+      nodeName: "title",
       attributes: {},
       children: ["A JSX Test"]
     }]
   }, {
-    elementName: "body",
+    nodeName: "body",
     attributes: {},
     children: [{
-      elementName: "div",
+      nodeName: "div",
       attributes: {
         id: "container"
       },
       children: [{
-        elementName: "p",
+        nodeName: "p",
         attributes: {},
         children: ["Just a basic JSX transformation"]
       }]

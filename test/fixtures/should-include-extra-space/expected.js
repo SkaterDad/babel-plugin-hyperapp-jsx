@@ -1,20 +1,20 @@
 var jsx = {
-  elementName: 'jsx',
+  nodeName: 'jsx',
   attributes: {},
   children: ['\n    ', {
-    elementName: 'a',
+    nodeName: 'a',
     attributes: {},
     children: null
   }, '\n    ', {
-    elementName: 'b',
+    nodeName: 'b',
     attributes: {},
     children: null
   }, ' \n    ', {
-    elementName: 'c',
+    nodeName: 'c',
     attributes: {},
     children: null
   }, '\n    ', {
-    elementName: 'd',
+    nodeName: 'd',
     attributes: {},
     children: null
   }, '\n  ']

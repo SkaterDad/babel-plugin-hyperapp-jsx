@@ -1,10 +1,10 @@
 var jsxA = {
-  elementName: "div",
+  nodeName: "div",
   attributes: {},
   children: []
 };
 var jsxB = {
-  elementName: "div",
+  nodeName: "div",
   attributes: {},
   children: null
 };

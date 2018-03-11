@@ -1,9 +1,9 @@
 import _jsx from "jsx-constructor";
 var object = _jsx({
-  elementName: "div",
+  nodeName: "div",
   attributes: {},
   children: [_jsx({
-    elementName: "strong",
+    nodeName: "strong",
     attributes: {},
     children: ["Hello,"]
   }), " world!"]

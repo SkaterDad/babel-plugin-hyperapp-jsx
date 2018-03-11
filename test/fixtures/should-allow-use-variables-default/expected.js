@@ -3,42 +3,42 @@ var lowercaseVariable = true;
 
 // Include attribute named after the variables to ensure variables are only recognized for elements
 var jsxA = {
-  elementName: UppercaseVariable,
+  nodeName: UppercaseVariable,
   attributes: {
     UppercaseVariable: ""
   },
   children: null
 };
 var jsxB = {
-  elementName: UppercaseVariable,
+  nodeName: UppercaseVariable,
   attributes: {
     UppercaseVariable: ""
   },
   children: []
 };
 var jsxC = {
-  elementName: UppercaseVariable,
+  nodeName: UppercaseVariable,
   attributes: {
     UppercaseVariable: ""
   },
   children: [UppercaseVariable]
 };
 var jsxD = {
-  elementName: "lowercaseVariable",
+  nodeName: "lowercaseVariable",
   attributes: {
     lowercaseVariable: ""
   },
   children: null
 };
 var jsxE = {
-  elementName: "lowercaseVariable",
+  nodeName: "lowercaseVariable",
   attributes: {
     lowercaseVariable: ""
   },
   children: []
 };
 var jsxF = {
-  elementName: "lowercaseVariable",
+  nodeName: "lowercaseVariable",
   attributes: {
     lowercaseVariable: ""
   },

@@ -3,42 +3,42 @@ var NotZVariable = true;
 
 // Include attribute named after the variables to ensure variables are only recognized for elements
 var jsxA = {
-  elementName: ZVariable,
+  nodeName: ZVariable,
   attributes: {
     ZVariable: ""
   },
   children: null
 };
 var jsxB = {
-  elementName: ZVariable,
+  nodeName: ZVariable,
   attributes: {
     ZVariable: ""
   },
   children: []
 };
 var jsxC = {
-  elementName: ZVariable,
+  nodeName: ZVariable,
   attributes: {
     ZVariable: ""
   },
   children: [ZVariable]
 };
 var jsxD = {
-  elementName: "NotZVariable",
+  nodeName: "NotZVariable",
   attributes: {
     NotZVariable: ""
   },
   children: null
 };
 var jsxE = {
-  elementName: "NotZVariable",
+  nodeName: "NotZVariable",
   attributes: {
     NotZVariable: ""
   },
   children: []
 };
 var jsxF = {
-  elementName: "NotZVariable",
+  nodeName: "NotZVariable",
   attributes: {
     NotZVariable: ""
   },

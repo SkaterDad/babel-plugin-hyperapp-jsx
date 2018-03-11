@@ -1,8 +1,8 @@
 var object = jsxConstructor({
-  elementName: "div",
+  nodeName: "div",
   attributes: {},
   children: [jsxConstructor({
-    elementName: "strong",
+    nodeName: "strong",
     attributes: {},
     children: ["Hello,"]
   }), " world!"]
