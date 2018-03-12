@@ -1,5 +1,5 @@
 var object = (
-  <div>
+  <div class="test">
     <strong>Hello,</strong> world!
   </div>
 )

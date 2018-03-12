@@ -1,0 +1,4 @@
+{
+  "module": "hyperapp",
+  "constructor": "h"
+}
