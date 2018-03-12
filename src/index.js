@@ -1,6 +1,5 @@
+//@ts-check
 const isString = require('lodash/isString')
-const identity = require('lodash/identity')
-const ary = require('lodash/ary')
 const esutils = require('esutils')
 
 const nameProperty = 'nodeName'
@@ -25,12 +24,7 @@ module.exports = function({ types: t }) {
    * ======================================================================= */
 
   const initConfig = (path, state) => {
-    const {
-      useNew = false,
-      module: constructorModule,
-      function: constructorFunction,
-      varsRegex,
-    } = state.opts
+    const { module = null, constructor = null, varsRegex = null } = state.opts
 
     let jsxObjectTransformer
 
@@ -38,36 +32,88 @@ module.exports = function({ types: t }) {
     // Default is Uppercase
     let variablesRegex = isString(varsRegex) ? new RegExp(varsRegex) : /^[A-Z]/
 
-    const executeExpression = useNew ? t.newExpression : t.callExpression
     const jsxObjectTransformerCreator = expression => value =>
-      executeExpression(expression, [value])
+      t.callExpression(expression, [value])
 
-    if (constructorModule) {
-      // If the constructor function will be retrieved from a module.
-      const moduleName = path.scope.generateUidIdentifier(
-        useNew ? 'JSXNode' : 'jsx'
-      )
-      jsxObjectTransformer = jsxObjectTransformerCreator(moduleName)
+    if (isString(module)) {
+      // Automatically vdom function from module in each file.
+      // ex: import { h } from 'hyperapp'
+      if (!isString(constructor)) {
+        throw new Error('VDOM constructor function name is required!')
+      }
 
+      // To avoid conflicts with other identifiers in the file, generate a unique alias
+      // ex:  import { h as _h } from 'hyperapp
+      const moduleName = path.scope.generateUidIdentifier(constructor)
+
+      // Apply JSX Object properties to `h` function parameters
+      jsxObjectTransformer = jsxObj =>
+        t.callExpression(moduleName, jsxObj.properties.map(p => p.value))
+
+      // Create the import declaration
       const importDeclaration = t.importDeclaration(
-        [t.importDefaultSpecifier(moduleName)],
-        t.stringLiteral(constructorModule)
+        [t.importSpecifier(moduleName, t.identifier(constructor))],
+        t.stringLiteral(module)
       )
 
-      // Add the import declration to the top of the file.
+      // Add the import declaration to the top of the file.
       path
         .findParent(p => p.isProgram())
         .unshiftContainer('body', importDeclaration)
-    } else if (constructorFunction) {
-      // If the constructor function will be an in scope function.
-      const expression = constructorFunction
-        .split('.')
-        .map(ary(t.identifier, 1))
-        .reduce(ary(t.memberExpression, 2))
-      jsxObjectTransformer = jsxObjectTransformerCreator(expression)
+    } else if (isString(constructor)) {
+      // Use a vdom constructor:  ex. h(tagname, props, children)
+      jsxObjectTransformer = jsxObj =>
+        t.callExpression(
+          t.identifier(constructor),
+          jsxObj.properties.map(p => p.value)
+        )
     } else {
-      // Otherwise, we won‘t be mapping.
-      jsxObjectTransformer = identity
+      // Otherwise, produce runtime optimized code
+      jsxObjectTransformer = jsxObj => {
+        const jsxTag = jsxObj.properties[0].value
+        const jsxAttrs = jsxObj.properties[1].value
+        const jsxChildren = jsxObj.properties[2].value
+
+        // Is this JSX object a component?
+        if (jsxTag && t.isIdentifier(jsxTag)) {
+          // Does this JSX object have attributes?
+          const noAttrs =
+            t.isObjectExpression(jsxAttrs) && jsxAttrs.properties.length === 0
+
+          // Does this JSX object have children?
+          const noChildren =
+            t.isArrayExpression(jsxChildren) &&
+            jsxChildren.elements.length === 0
+
+          // Set function call arguments based on attrs & children
+          let compFuncArgs = []
+
+          switch (true) {
+            // MyComponent()
+            case noAttrs && noChildren:
+              compFuncArgs = []
+              break
+            // MyComponent(null, ['Child'])
+            case noAttrs && !noChildren:
+              compFuncArgs = [t.NullLiteral(), jsxChildren]
+              break
+            // MyComponent({ prop1: true })
+            case !noAttrs && noChildren:
+              compFuncArgs = [jsxAttrs]
+              break
+            // MyComponent({ prop1: true }, ['Child'])
+            case !noAttrs && !noChildren:
+            default:
+              compFuncArgs = [jsxAttrs, jsxChildren]
+          }
+
+          // Return component function call
+          return t.callExpression(jsxTag, compFuncArgs)
+        }
+
+        // Not a component, so return raw VDOM object
+        return jsxObj
+      }
     }
 
     return {
