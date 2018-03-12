@@ -15,7 +15,7 @@ const babelOptions = options => ({
   ],
   plugins: [
     require('babel-plugin-external-helpers'),
-    [require('../src'), options],
+    [require('../lib'), options],
   ],
 })
 
