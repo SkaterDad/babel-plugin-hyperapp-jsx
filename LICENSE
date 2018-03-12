@@ -1,4 +1,8 @@
+Original work [babel-plugin-transform-jsx](https://github.com/calebmer/node_modules/tree/master/babel-plugin-transform-jsx)
 Copyright (c) 2016 Caleb Meredith
+
+Modified work [babel-plugin-hyperapp-jsx](https://github.com/SkaterDad/babel-plugin-hyperapp-jsx)
+Copyright (c) 2018 - Present [Mike Montoya](https://github.com/skaterdad)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
