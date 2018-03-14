@@ -49,6 +49,27 @@ This plugin accepts the following optional arguments.  These are provided to kee
  * `module`: The name of the module to import the constructor from.
  * `varsRegex`: Custom regular expression (string) to identify components.
 
+
+## Optimizations
+
+ * Combines string children
+    ```js
+    // In
+    children: ["a", "b", "c"]
+
+    // Out
+    children: ["abc"]
+    ```
+ * Flattens arrays in `children` one level
+    ```js
+    // In
+    children: [1,2,[3,4]]
+
+    // Out
+    children: [1,2,3,4]
+    ```
+
+
  ## TODO:
  
   * Benchmarks
