@@ -17,4 +17,4 @@ var jsxC = UppercaseVariable(
 
 var jsxD = UppercaseVariable();
 
-var jsxE = UppercaseVariable(null, [UppercaseVariable]);
+var jsxE = UppercaseVariable({}, [UppercaseVariable]);
