@@ -1,10 +1,6 @@
 # babel-plugin-hyperapp-jsx
 
-> THIS REPO IS A WORK IN PROGRESS, NOT YET RELEASED.
-
-## Acknowledgement
-
-This plugin is a fork of Caleb Meredith‘s ([`@calebmer`][twcm] on Twitter) excellent [babel-plugin-transform-jsx](https://github.com/calebmer/node_modules/tree/master/babel-plugin-transform-jsx), customized for `hyperapp`.
+> THIS PLUGIN IS EXPERIMENTAL.  USE AT YOUR OWN RISK AFTER THOROUGH APPLICATION TESTING.
 
 ## Description
 
@@ -24,7 +20,7 @@ These virtual node objects are compatible with `hyperapp` and `ultradom`.
 
 In your `.babelrc` or build configuration, add this plugin.
 
-Without options (Recommended):
+Without options (full optimization mode):
 
 ```js
 {
@@ -32,7 +28,7 @@ Without options (Recommended):
 }
 ```
 
-With options:
+With options (safer, but potentially lower performance):
 
 ```js
 {
@@ -52,6 +48,34 @@ This plugin accepts the following optional arguments. These are provided to keep
 * `constructor`: The name of your VDOM function.
 * `module`: The name of the module to import the constructor from.
 * `varsRegex`: Custom regular expression (string) to identify components.
+
+## Limitations
+
+In "zero-config", full optimization mode:
+
+* Components will receive the `children` argument as an array.
+* If your component returns an array, you must explicitly `.concat` or `...spread` it when using it. Hyperapp's `h` function normally flattens arrays one level.
+
+
+```jsx
+const ListItems = props => props.data.map(d => <li>{d}</li>)
+
+// NOPE
+const view = ({ data }) => (
+  <ul>
+    <li>Static item</li>
+    <ListItems data={data} />
+  </ul>
+)
+
+// Should work
+const view = ({ data }) => (
+  <ul>
+    <li>Static item</li>
+    {...<ListItems data={data} />}
+  </ul>
+)
+```
 
 ## Optimizations
 
@@ -94,4 +118,9 @@ This plugin accepts the following optional arguments. These are provided to keep
 ## TODO:
 
 * Benchmarks
+* Example application with tests
 * Examples in DOCS (For now, look at the tests)
+
+## Credits
+
+This plugin is a fork of Caleb Meredith‘s ([`@calebmer`][twcm] on Twitter) excellent [babel-plugin-transform-jsx](https://github.com/calebmer/node_modules/tree/master/babel-plugin-transform-jsx), customized for `hyperapp`.
