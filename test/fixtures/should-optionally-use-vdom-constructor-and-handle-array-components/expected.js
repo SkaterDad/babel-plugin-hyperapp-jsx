@@ -4,9 +4,6 @@ var Component = function Component() {
   ];
 };
 
-var object = h("div",
-  {},
-  [
-    h(Component, {}, [])
-  ]
+var object = h("div", {},
+  h(Component, {})
 );

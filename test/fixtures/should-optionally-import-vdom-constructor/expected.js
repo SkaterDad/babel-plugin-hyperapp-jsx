@@ -4,7 +4,7 @@ var object = _h("div",
     class: "test"
   },
   [
-    _h("strong",{},["Hello,"]),
+    _h("strong",{},"Hello,"),
     " world!"
   ]
 );

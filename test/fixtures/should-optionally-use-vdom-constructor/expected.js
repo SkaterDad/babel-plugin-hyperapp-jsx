@@ -3,7 +3,7 @@ var object = vdom("div",
     class: "test"
   },
   [
-    vdom("strong",{},["Hello,"]),
+    vdom("strong",{},"Hello,"),
     " world!"
   ]
 );

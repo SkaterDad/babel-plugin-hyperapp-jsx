@@ -1,6 +1,4 @@
 var object = h("div",
   {},
-  [
-    h(Component,{ prop: true },["Test"])
-  ]
+  h(Component, { prop: true }, "Test")
 );
