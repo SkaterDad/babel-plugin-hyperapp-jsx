@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-hyperapp-jsx",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Turn JSX into Hyperapp VNodes & Function Calls.",
   "author": "Mike Montoya <skaterdad.code@gmail.com>",
   "contributors": [
