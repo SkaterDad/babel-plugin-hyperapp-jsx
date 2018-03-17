@@ -4,8 +4,6 @@ var Component = function Component() {
   ];
 };
 
-var ArrayLiteral = [1,2,3];
-
 var view = {
   nodeName: "main",
   attributes: {},
