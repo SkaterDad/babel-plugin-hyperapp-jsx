@@ -96,7 +96,30 @@ const view = ({ data }) => (
   <div>{[1, 2, [3, 4]]}</div>
 
   // Out
-  children: [1, 2, 3, 4]
+  {
+    nodeName: 'div',
+    attributes: {},
+    children: [1, 2, 3, 4]
+  }
+  ```
+
+* When only JSX child is a variable reference to an array defined in scope:
+  ```jsx
+  // In
+  const myNumbers = [1, 2, 3]
+
+  function Wrapper() {
+    return <div>{myNumbers}</div>
+  }
+
+  // Out
+  function Wrapper() {
+    return {
+      nodeName: 'div',
+      attributes: {},
+      children: myNumbers
+    }
+  }
   ```
 
 * Only passes necessary arguments to VDOM constructor
