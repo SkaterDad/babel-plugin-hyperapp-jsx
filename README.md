@@ -103,7 +103,7 @@ const view = ({ data }) => (
   }
   ```
 
-* When only JSX child is a variable reference to an array defined in scope:
+* When only JSX child is a variable reference to an array defined in scope, it will be passed directly:
   ```jsx
   // In
   const myNumbers = [1, 2, 3]
