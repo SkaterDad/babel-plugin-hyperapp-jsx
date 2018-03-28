@@ -17,7 +17,8 @@ function TableRow(props) {
       key: props.key,
       'data-id': data.id
     },
-    children: children
+    children: children,
+    key: props.key
   };
 }
 
